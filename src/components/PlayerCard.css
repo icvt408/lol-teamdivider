@@ -1,0 +1,94 @@
+/* src/components/PlayerCard.css */
+
+.player-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    background-color: #2D2D33;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.player-info {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    width: 100%;
+}
+
+.player-name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.player-tagline {
+    font-size: 0.8rem;
+    color: #888;
+    font-weight: normal;
+}
+
+.lane-selection {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.rank-button {
+    background-color: #2D2D33;
+    border-color: #2D2D33;
+    padding: 8px;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.division {
+    text-align: center;
+    font-size: 0.7rem;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.lane-button {
+    padding: 4px;
+    width: 35px;
+    height: 35px;
+}
+
+.lane-button:hover {
+    background-color: #4E4E57;
+    border-color: #4E4E57;
+}
+
+.lane-button:hover img {
+    opacity: 0.9;
+}
+
+
+.lane-button img {
+    width: 100%;
+    height: 100%;
+    opacity: 0.2;
+}
+
+.lane-button.main-selected {
+    border-color: #968700;
+}
+
+.lane-button.main-selected img {
+    opacity: 1;
+}
+
+.lane-button.sub-selected {
+    border-color: #5f5601;
+}
+
+.lane-button.sub-selected img {
+    opacity: 0.5;
+}
