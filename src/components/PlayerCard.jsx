@@ -25,8 +25,8 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
     return (
         <div className="player-card">
             <div className="player-info">
-                <span className="player-name">{player.game_name}</span>
-                <span className="player-tagline">#{player.tagline}</span>
+                <span className="player-name">{player.gameName}</span>
+                <span className="player-tagline">#{player.tagLine}</span>
                 <button className={`rank-button ${player.rank.tier}`} onClick={() => onOpenRankModal(player.name)}>
                     <img src={tierIcons[player.rank.tier]} alt={`${player.rank.tier}_${player.rank.division}`} />
                     {divisionVisibleTiers.includes(player.rank.tier) && <span className="division">{player.rank.division}</span>}

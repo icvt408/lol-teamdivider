@@ -26,8 +26,8 @@ function App() {
     const newPlayers = extractRiotIds.map(_name => (
       {
         name: _name.join("#"),
-        game_name: _name[0],
-        tagline: _name[1],
+        gameName: _name[0],
+        tagLine: _name[1],
         lanes: {
           main: [],
           sub: []
