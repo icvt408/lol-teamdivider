@@ -37,3 +37,44 @@ export const tierIcons = {
     Iron: ironIcon,
     Unranked: unrankedIcon
 }
+
+class Rank {
+    constructor(tier, division) {
+        this.tier = tier
+        this.division = division
+    }
+
+    static fromApiData(apiData) {
+        if (!apiData) {
+            return new Rank("Unranked", "I");
+        }
+        return new Rank(apiData.tier, apiData.rank);
+    }
+
+    toString() {
+        return `${this.tier}_${this.division}`
+    }
+}
+
+class Player {
+    constructor({ gameName, tagLine, lane = null, rank = new Rank("Unranked", null), puuid = null }) {
+        if (!gameName || !tagLine) {
+            throw new Error('Player must have a gameName and tagLine.');
+        }
+
+        this.gameName = gameName;
+        this.tagLine = tagLine;
+        this.lane = lane;
+        this.rank = rank;
+        this.puuid = puuid;
+    }
+
+    get riotId() {
+        return `${this.gameName}#${this.tagLime}`
+    }
+
+    toString() {
+        return `Player(riotId=${this.riotId}, rank=${this.rank.toString()})`;
+    }
+
+}
