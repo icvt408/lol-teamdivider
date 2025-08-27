@@ -27,8 +27,8 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
             <div className="player-info">
                 <span className="player-name">{player.gameName}</span>
                 <span className="player-tagline">#{player.tagLine}</span>
-                <button className={`rank-button ${player.rank.tier}`} onClick={() => onOpenRankModal(player.name)}>
-                    <img src={tierIcons[player.rank.tier]} alt={`${player.rank.tier}_${player.rank.division}`} />
+                <button className={`rank-button ${player.rank.tier}`} onClick={() => onOpenRankModal(player.riotId)}>
+                    <img src={tierIcons[player.rank.tier]} alt={player.rank} />
                     {divisionVisibleTiers.includes(player.rank.tier) && <span className="division">{player.rank.division}</span>}
                 </button>
             </div>
@@ -37,8 +37,7 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
                     <button
                         key={lane}
                         className={`lane-button 
-                        ${player.lanes.main === lane ? 'main-selected' : ''}
-                        ${player.lanes.sub.includes(lane) ? 'sub-selected' : ''}`}
+                        ${player.lanes === lane ? 'main-selected' : ''}`}
                         onClick={() => handleLaneButtonClick(lane)}
                     >
                         <img src={laneIcons[lane]} alt={lane} />

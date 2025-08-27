@@ -5,8 +5,8 @@ const tiers = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamo
 const divisions = ["IV", "III", "II", "I"]
 
 const RankModal = ({ player, onClose, onSave }) => {
-    const [selectedTier, setSelectedTier] = useState(player.tier)
-    const [selectedDivision, setSelectedDivision] = useState(player.division)
+    const [selectedTier, setSelectedTier] = useState(player.rank.tier)
+    const [selectedDivision, setSelectedDivision] = useState(player.rank.division)
 
     const [isDivisionButtonDisabled, setIsDivisionButtonDisabled] = useState(true)
     const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(true)
@@ -28,13 +28,12 @@ const RankModal = ({ player, onClose, onSave }) => {
     }
 
     const handleDivisionButtonClick = (division) => {
-        console.log(division)
         setIsSaveButtonDisabled(false)
         setSelectedDivision(division)
     }
 
     const handleSave = () => {
-        onSave(player.name, { tier: selectedTier, division: selectedDivision });
+        onSave(player.riotId, { tier: selectedTier, division: selectedDivision });
         onClose();
     };
 

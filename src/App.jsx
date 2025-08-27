@@ -6,12 +6,17 @@ import Header from './components/Header'
 import PlayerCard from "./components/PlayerCard"
 import RankModal from './components/RankModal'
 import Toast from './components/Toast'
+import Player from './player'
+import { Rank } from './types'
+import { getAccountByRiotId, getLeagueByPuuid } from './utils/riotApi'
+
 
 function App() {
 
   const [players, setPlayers] = useState([])
   const [modalPlayerName, setModalPlayerName] = useState(null);
   const [toastMessage, setToastMessage] = useState(null)
+  const [isLoading, setIsLoading] = useState(false);
 
   const showToast = (message) => {
     setToastMessage(message);
@@ -23,19 +28,10 @@ function App() {
 
 
   const handlePlayersExtracted = (extractRiotIds) => {
-    const newPlayers = extractRiotIds.map(_name => (
-      {
-        name: _name.join("#"),
-        gameName: _name[0],
-        tagLine: _name[1],
-        lanes: {
-          main: [],
-          sub: []
-        },
-        rank: {
-          tier: "Unranked",
-          division: "I"
-        }
+    const newPlayers = extractRiotIds.map(name =>
+      new Player({
+        gameName: name[0],
+        tagLine: name[1],
       }))
 
     setPlayers(newPlayers)
@@ -59,16 +55,57 @@ function App() {
     setModalPlayerName(null);
   }
 
-  const handleSaveRank = (playerName, newRank) => {
+  const handleSaveRank = (playerName, newRankData) => {
     setPlayers(
-      players.map(player =>
-        player.name === playerName ? { ...player, rank: newRank } : player
-      )
-    )
+      players.map(player => {
+        if (player.riotId === playerName) {
+          const newRank = new Rank(newRankData.tier, newRankData.division);
+
+          return new Player({
+            gameName: player.gameName,
+            tagLine: player.tagLine,
+            lane: player.lane,
+            rank: newRank,
+            puuid: player.puuid
+          });
+        }
+        return Player;
+      })
+    );
+
     handleCloseRankModal()
+  };
+
+  const handleCompletePlayersInfo = async () => {
+    setIsLoading(true);
+
+    // 情報を補完するプレイヤーデータの条件
+    const playersToUpdate = players.filter(player => player.rank)
+
+    if (playersToUpdate.length === 0) {
+      setIsLoading(false);
+      return;
+    }
+
+    const updatePromises = playersToUpdate.map(async (player) => {
+      try {
+        const accountData = await getAccountByRiotId("CheyTac", "408")
+        const puuid = accountData.puuid;
+
+        const leagueData = await getLeagueByPuuid(puuid);
+        const soloDuoRank = leagueData.find((rankData) => rankData["queueType"] === "RANKED_SOLO_5x5")
+
+      } catch (error) {
+        console.error(`Failed to fetch data for ${player.name}:`, error);
+        showToast(error.message)
+      }
+    })
+
+
+    setIsLoading(false);
   }
 
-  const playerInModal = players.find(p => p.name === modalPlayerName);
+  const playerInModal = players.find(p => p.riotId === modalPlayerName);
 
 
   return (
@@ -81,7 +118,7 @@ function App() {
           {players.length > 0 && (
             players.map(player => (
               <PlayerCard
-                key={player.name}
+                key={player.riotId}
                 player={player}
                 onLaneChange={handleLaneChange}
                 onOpenRankModal={handleOpenRankModal}
@@ -89,6 +126,7 @@ function App() {
             ))
           )}
 
+          <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>
         </div>
 
         {playerInModal && (
