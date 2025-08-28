@@ -87,7 +87,7 @@ function App() {
       let userMessage = "情報の取得中にエラーが発生しました。";
 
       if (status === 404) {
-        userMessage = "プレイヤーが見つかりませんでした。RiotIDを確認してください。";
+        userMessage = "データが見つかりませんでした。RiotIDを確認してください。";
       } else if (status === 429) {
         userMessage = "アクセス数が多すぎます。しばらくしてからもう一度お試しください";
       } else if (status === 401) {
