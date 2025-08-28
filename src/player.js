@@ -1,10 +1,11 @@
 import { Rank } from "./types";
+import { getAccountByRiotId } from "./utils/riotApi";
 
 /**
  * プレイヤーデータを格納するクラス
  */
 class Player {
-    constructor({ gameName, tagLine, lanes = null, rank = new Rank("Unranked", "I"), puuid = null }) {
+    constructor({ gameName, tagLine, lanes = null, rank = new Rank("Unranked", "I"), puuid = null, isApiFetched = false }) {
         if (!gameName || !tagLine) {
             throw new Error('Player must have a gameName and tagLine.');
         }
@@ -14,10 +15,40 @@ class Player {
         this.lanes = lanes;
         this.rank = rank;
         this.puuid = puuid;
+        this.isApiFetched = isApiFetched;
     }
 
     get riotId() {
         return `${this.gameName}#${this.tagLine}`
+    }
+
+    /**
+ * Riot APIから不足している情報を補完するメソッド
+ */
+    async completeInfo() {
+        if (this.isApiFetched) {
+            return this;
+        }
+
+        try {
+            const accountData = await getAccountByRiotId(this.gameName, this.tagLine);
+            const puuid = accountData.puuid;
+
+            const rankData = await this.rank.complateRankData(puuid, "RANKED_SOLO_5x5")
+
+            return new Player({
+                gameName: this.gameName,
+                tagLine: this.tagLine,
+                lanes: this.lanes,
+                puuid: puuid,
+                rank: rankData,
+                isApiFetched: true,
+            });
+
+        } catch (error) {
+            console.error(`Failed to fetch data for ${this.riotId}:`, error);
+            return new Player({ ...this, isApiFetched: true });
+        }
     }
 
     toString() {

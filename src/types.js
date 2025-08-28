@@ -15,6 +15,7 @@ import masterIcon from "./assets/rank_icons/Master.svg"
 import platinumIcon from "./assets/rank_icons/Platinum.svg"
 import silverIcon from "./assets/rank_icons/Silver.svg"
 import unrankedIcon from "./assets/rank_icons/Unranked.svg"
+import { getLeagueByPuuid } from "./utils/riotApi"
 
 export const laneIcons = {
     Top: topIcon,
@@ -49,6 +50,17 @@ export class Rank {
             return new Rank("Unranked", "I");
         }
         return new Rank(apiData.tier, apiData.rank);
+    }
+
+    async complateRankData(puuid, queueType) {
+        if (this.tier === "Unranked") {
+            const leagueData = await getLeagueByPuuid(puuid);
+            const rankData = leagueData.find(d => d.queueType === queueType);
+            return this.fromApiData(rankData);
+        } else {
+            return this;
+        }
+
     }
 
     toString() {

@@ -8,7 +8,6 @@ import RankModal from './components/RankModal'
 import Toast from './components/Toast'
 import Player from './player'
 import { Rank } from './types'
-import { getAccountByRiotId, getLeagueByPuuid } from './utils/riotApi'
 
 
 function App() {
@@ -77,32 +76,15 @@ function App() {
   };
 
   const handleCompletePlayersInfo = async () => {
-    setIsLoading(true);
+    //setIsLoading(true);
+    const updatePromises = players.map(async (player) => await player.completeInfo())
 
-    // 情報を補完するプレイヤーデータの条件
-    const playersToUpdate = players.filter(player => player.rank)
+    const updatePlayers = await Promise.all(updatePromises);
 
-    if (playersToUpdate.length === 0) {
-      setIsLoading(false);
-      return;
-    }
-
-    const updatePromises = playersToUpdate.map(async (player) => {
-      try {
-        const accountData = await getAccountByRiotId("CheyTac", "408")
-        const puuid = accountData.puuid;
-
-        const leagueData = await getLeagueByPuuid(puuid);
-        const soloDuoRank = leagueData.find((rankData) => rankData["queueType"] === "RANKED_SOLO_5x5")
-
-      } catch (error) {
-        console.error(`Failed to fetch data for ${player.name}:`, error);
-        showToast(error.message)
-      }
-    })
+    setPlayers(updatePlayers)
 
 
-    setIsLoading(false);
+    //setIsLoading(false);
   }
 
   const playerInModal = players.find(p => p.riotId === modalPlayerName);
