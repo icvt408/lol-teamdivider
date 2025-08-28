@@ -35,6 +35,6 @@ export default async function handler(req, res) {
     } catch (error) {
         // ネットワークエラーなどをキャッチ
         console.log('Proxy request failed:', error);
-        return res.status(500).json({ message: 'Internal Server Error!', error: error.message });
+        return res.status(500).json({ status: { message: 'Internal Server Error', status_code: 500 } });
     }
 }
