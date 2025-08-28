@@ -26,29 +26,23 @@ class Player {
  * Riot APIから不足している情報を補完するメソッド
  */
     async completeInfo() {
-        if (this.isApiFetched) {
-            return this;
-        }
+        // if (this.isApiFetched) {
+        //     return this;
+        // }
 
-        try {
-            const accountData = await getAccountByRiotId(this.gameName, this.tagLine);
-            const puuid = accountData.puuid;
+        const accountData = await getAccountByRiotId(this.gameName, this.tagLine);
+        const puuid = accountData.puuid;
 
-            const rankData = await this.rank.complateRankData(puuid, "RANKED_SOLO_5x5")
+        const rankData = await this.rank.complateRankData(puuid, "RANKED_SOLO_5x5")
 
-            return new Player({
-                gameName: this.gameName,
-                tagLine: this.tagLine,
-                lanes: this.lanes,
-                puuid: puuid,
-                rank: rankData,
-                isApiFetched: true,
-            });
-
-        } catch (error) {
-            console.error(`Failed to fetch data for ${this.riotId}:`, error);
-            return new Player({ ...this, isApiFetched: true });
-        }
+        return new Player({
+            gameName: this.gameName,
+            tagLine: this.tagLine,
+            lanes: this.lanes,
+            puuid: puuid,
+            rank: rankData,
+            isApiFetched: true,
+        });
     }
 
     toString() {

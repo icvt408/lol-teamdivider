@@ -1,3 +1,5 @@
+import ApiError from "./apiError";
+
 /**
  * RiotAPIへのリクエストを送信する共通関数
  * @param {string} region リクエストを実行するルーティング値
@@ -8,21 +10,16 @@
 const fetchRiotApi = async (urlPath, queryParams = {}) => {
     const queryString = new URLSearchParams(queryParams).toString();
     const url = `/api/proxy?path=${encodeURIComponent(urlPath)}&${queryString}`;
-    try {
-        const response = await fetch(url);
+    const response = await fetch(url);
 
-        if (!response.ok) {
-            // HTTPステータスコードが200番台以外の場合
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        // ネットワークエラーや上記でthrowされたエラーをキャッチ
-        console.error("Riot API request failed:", error);
-        throw error; // エラーを呼び出し元に再度スロー
+    // HTTPステータスコードが200番台以外の場合
+    if (!response.ok) {
+        const errorData = await response.json()
+        throw new ApiError(errorData.status.message || 'API request failed', response.status);
     }
+
+    const data = await response.json();
+    return data;
 }
 
 

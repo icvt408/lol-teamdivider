@@ -76,15 +76,30 @@ function App() {
   };
 
   const handleCompletePlayersInfo = async () => {
-    //setIsLoading(true);
+    setIsLoading(true);
     const updatePromises = players.map(async (player) => await player.completeInfo())
 
-    const updatePlayers = await Promise.all(updatePromises);
+    try {
+      const updatePlayers = await Promise.all(updatePromises);
+      setPlayers(updatePlayers)
+    } catch (error) {
+      const status = error.status;
+      let userMessage = "情報の取得中にエラーが発生しました。";
 
-    setPlayers(updatePlayers)
-
-
-    //setIsLoading(false);
+      if (status === 404) {
+        userMessage = "プレイヤーが見つかりませんでした。RiotIDを確認してください。";
+      } else if (status === 429) {
+        userMessage = "アクセス数が多すぎます。しばらくしてからもう一度お試しください";
+      } else if (status === 401) {
+        userMessage = "無効なAPIトークンです。管理者にお問い合わせください。";
+      } else {
+        userMessage = "サーバーエラーが発生しました。時間を置いて再度お試しください。"
+      }
+      console.error("An error occurred while completing player info:", error);
+      showToast(userMessage);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const playerInModal = players.find(p => p.riotId === modalPlayerName);
