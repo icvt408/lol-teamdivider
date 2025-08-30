@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import ChatInputForm from './components/ChatInputForm'
+import DebugModal from './components/DebugModal'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import PlayerCard from "./components/PlayerCard"
@@ -8,6 +9,7 @@ import RankModal from './components/RankModal'
 import Toast from './components/Toast'
 import Player from './player'
 import { Rank } from './types'
+import { generateDummyPlayers } from './utils/dummyData'
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
   const [modalPlayerName, setModalPlayerName] = useState(null);
   const [toastMessage, setToastMessage] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
+  const [showDebugModal, setShowDebugModal] = useState(false);
 
   const showToast = (message) => {
     setToastMessage(message);
@@ -102,6 +105,11 @@ function App() {
     }
   }
 
+  const handleReplaceDummyPlayers = () => {
+    const newDummyPlayers = generateDummyPlayers("normal");
+    setPlayers(newDummyPlayers);
+  }
+
   const playerInModal = players.find(p => p.riotId === modalPlayerName);
 
 
@@ -126,11 +134,22 @@ function App() {
           <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>
         </div>
 
+        {import.meta.env.DEV && (
+          <button onClick={() => setShowDebugModal(true)}>デバッグ</button>
+        )}
+
         {playerInModal && (
           <RankModal
             player={playerInModal}
             onClose={handleCloseRankModal}
             onSave={(handleSaveRank)} />
+        )}
+
+        {showDebugModal && (
+          <DebugModal
+            onClose={() => setShowDebugModal(false)}
+            onReplacePlayers={handleReplaceDummyPlayers}
+          />
         )}
 
         {toastMessage && (
