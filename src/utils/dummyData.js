@@ -1,5 +1,8 @@
-const ranksWithDivisions = ["IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "EMERALD", "DIAMOND"];
-const ranksWithoutDivisions = ["MASTER", "GRANDMASTER", "CHALLENGER"];
+import Player from "../player";
+import { Rank } from "../types";
+
+const ranksWithDivisions = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamond"];
+const ranksWithoutDivisions = ["Master", "GrandMaster", "Challenger"];
 const divisions = ["IV", "III", "II", "I"];
 
 /**
@@ -9,22 +12,24 @@ const divisions = ["IV", "III", "II", "I"];
 export const generateAllRanks = () => {
     let allRanks = [];
 
-    // ディビジョンがあるランクを生成
     ranksWithDivisions.forEach(tier => {
         divisions.forEach(division => {
-            allRanks.push(`${tier} ${division}`);
+            allRanks.push({ tier: tier, rank: division });
         });
     });
 
-    // ディビジョンがないランクを追加
     ranksWithoutDivisions.forEach(tier => {
-        allRanks.push(tier);
+        allRanks.push({ tier: tier, rank: "I" });
     });
 
     return allRanks;
 }
 
-const getRankProbabilities = (allRanks, distribution) => {
+
+const allRanks = generateAllRanks();
+
+
+const getRankProbabilities = (distribution) => {
     const numRanks = allRanks.length;
     let rankProbs = [];
 
@@ -59,4 +64,39 @@ const getRankProbabilities = (allRanks, distribution) => {
     }
 
     return rankProbs;
+};
+
+
+const getRandomRankByDistribution = (rankProbabilities) => {
+    const cumulativeProbs = [];
+    let sum = 0;
+    for (const prob of rankProbabilities) {
+        sum += prob;
+        cumulativeProbs.push(sum);
+    }
+
+    const randomValue = Math.random();
+
+    for (let i = 0; i < allRanks.length; i++) {
+        if (randomValue < cumulativeProbs[i]) {
+            return Rank.fromApiData(allRanks[i]);
+        }
+    }
+
+    return Rank.fromApiData(allRanks[allRanks.length - 1]);
+};
+
+
+export const generateDummyPlayers = (distribution) => {
+    const players = []
+    const rankProbs = getRankProbabilities(distribution)
+
+    for (let i = 1; i <= 10; i++) {
+        const gameName = `Player_${i}`;
+        const selectedRank = getRandomRankByDistribution(rankProbs);
+
+        players.push(new Player({ gameName: gameName, tagLine: "dummy", rank: selectedRank }));
+    };
+
+    return players;
 }
