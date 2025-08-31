@@ -10,6 +10,8 @@ import Toast from './components/Toast'
 import Player from './player'
 import { Rank } from './types'
 import { generateDummyPlayers } from './utils/dummyData'
+import calculateImbalanceScore from './utils/imbalanceScore'
+import { adjustTeams, divideTeamsGreedy } from './utils/teamDivider'
 
 
 function App() {
@@ -107,6 +109,25 @@ function App() {
     }
   }
 
+  //チーム分けボタン
+  const handleDivideTeams = () => {
+    if (!(players.length === 10)) {
+      showToast("チーム分けには10人のプレイヤーが必要です。")
+      return
+    }
+
+    const { teamA, teamB } = divideTeamsGreedy(players);
+    console.log("Score: ", calculateImbalanceScore(teamA, teamB));
+
+    const adjustedTeams = adjustTeams(teamA, teamB);
+    //ここにチームをディスプレイするための処理を追加
+    console.log(adjustedTeams);
+
+    const finalScore = calculateImbalanceScore(adjustedTeams.teamA, adjustedTeams.teamB)
+    console.log("finalScore: ", finalScore);
+  }
+
+  //デバッグ用
   const handleReplaceDummyPlayers = () => {
     const newDummyPlayers = generateDummyPlayers("normal");
     setPlayers(newDummyPlayers);
@@ -135,6 +156,8 @@ function App() {
         </div>
 
         <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>
+        <button onClick={handleDivideTeams}>チーム分け</button>
+
         {import.meta.env.DEV && (
           <button onClick={() => setShowDebugModal(true)}>デバッグ</button>
         )}
