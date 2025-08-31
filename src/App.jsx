@@ -2,7 +2,6 @@ import { useState } from 'react'
 import './App.css'
 import ChatInputForm from './components/ChatInputForm'
 import DebugModal from './components/DebugModal'
-import Footer from './components/Footer'
 import Header from './components/Header'
 import PlayerCard from "./components/PlayerCard"
 import RankModal from './components/RankModal'
@@ -138,50 +137,52 @@ function App() {
 
   return (
     <>
-      <Header />
-      <main>
-        <ChatInputForm onPlayersExtracted={handlePlayersExtracted} />
+      <div className="app-container">
+        <Header />
+        <main className="main-content">
+          <ChatInputForm onPlayersExtracted={handlePlayersExtracted} />
+          <div className="player-card-list">
+            {players.length > 0 && (
+              players.map(player => (
+                <PlayerCard
+                  key={player.riotId}
+                  player={player}
+                  onLaneChange={handleLaneChange}
+                  onOpenRankModal={handleOpenRankModal}
+                />
+              ))
+            )}
+          </div>
 
-        <div className="player-card-list">
-          {players.length > 0 && (
-            players.map(player => (
-              <PlayerCard
-                key={player.riotId}
-                player={player}
-                onLaneChange={handleLaneChange}
-                onOpenRankModal={handleOpenRankModal}
-              />
-            ))
+          <div className="button-group">
+            <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>
+            <button onClick={handleDivideTeams}>チーム分け</button>
+            {import.meta.env.DEV && (
+              <button onClick={() => setShowDebugModal(true)}>デバッグ</button>
+            )}
+          </div>
+
+
+          {playerInModal && (
+            <RankModal
+              player={playerInModal}
+              onClose={handleCloseRankModal}
+              onSave={(handleSaveRank)} />
           )}
-        </div>
 
-        <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>
-        <button onClick={handleDivideTeams}>チーム分け</button>
+          {showDebugModal && (
+            <DebugModal
+              onClose={() => setShowDebugModal(false)}
+              onReplacePlayers={handleReplaceDummyPlayers}
+            />
+          )}
 
-        {import.meta.env.DEV && (
-          <button onClick={() => setShowDebugModal(true)}>デバッグ</button>
-        )}
+          {toastMessage && (
+            <Toast message={toastMessage} onClose={hideToast} />
+          )}
 
-        {playerInModal && (
-          <RankModal
-            player={playerInModal}
-            onClose={handleCloseRankModal}
-            onSave={(handleSaveRank)} />
-        )}
-
-        {showDebugModal && (
-          <DebugModal
-            onClose={() => setShowDebugModal(false)}
-            onReplacePlayers={handleReplaceDummyPlayers}
-          />
-        )}
-
-        {toastMessage && (
-          <Toast message={toastMessage} onClose={hideToast} />
-        )}
-
-      </main >
-      <Footer />
+        </main >
+      </div>
     </>
   )
 }
