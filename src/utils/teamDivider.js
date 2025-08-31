@@ -36,7 +36,7 @@ export const divideTeamsGreedy = (players) => {
  */
 export const adjustTeams = (teamA, teamB, maxIterations = 100) => {
     let currentTeamA = [...teamA];
-    let currentTeamB = [...teamB]
+    let currentTeamB = [...teamB];
     let currentScore = calculateImbalanceScore(currentTeamA, currentTeamB);
 
     for (let i = 0; i < maxIterations; i++) {
