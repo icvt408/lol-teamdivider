@@ -7,7 +7,7 @@ import Player from "../player";
  * @param {Player} player - プレイヤーオブジェクト
  * @returns {number} プレイヤーの重み
  */
-const calculatePlayerWeight = (player) => {
+export const calculatePlayerWeight = (player) => {
     return rankWeights.default[player.rank.toString()]
 };
 

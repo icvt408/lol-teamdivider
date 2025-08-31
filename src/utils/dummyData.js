@@ -9,7 +9,7 @@ const divisions = ["IV", "III", "II", "I"];
  * すべてのランクティアとディビジョンのリストを生成する
  * @returns {Array<string>} 全ランクのリスト（例: ["IRON IV", "IRON III", ..., "CHALLENGER"]）
  */
-export const generateAllRanks = () => {
+const generateAllRanks = () => {
     let allRanks = [];
 
     ranksWithDivisions.forEach(tier => {
@@ -28,7 +28,11 @@ export const generateAllRanks = () => {
 
 const allRanks = generateAllRanks();
 
-
+/**
+ * 指定された確率分布の配列を生成する
+ * @param {string} distribution - 確率分布の種類
+ * @returns {Array<number>} 確率分布の配列
+ */
 const getRankProbabilities = (distribution) => {
     const numRanks = allRanks.length;
     let rankProbs = [];
@@ -66,7 +70,11 @@ const getRankProbabilities = (distribution) => {
     return rankProbs;
 };
 
-
+/**
+ * 確率分布に沿ったランクを1つ選択する関数
+ * @param {Array<number>} rankProbabilities - 確率分布の配列
+ * @returns {Rank} 選択されたランクオブジェクト
+ */
 const getRandomRankByDistribution = (rankProbabilities) => {
     const cumulativeProbs = [];
     let sum = 0;
@@ -87,6 +95,11 @@ const getRandomRankByDistribution = (rankProbabilities) => {
 };
 
 
+/**
+ * ダミーのプレイヤーデータを生成する関数
+ * @param {string} distribution - 確率分布の種類
+ * @returns {Array<Player>} 生成されたプレイヤーデータの配列
+ */
 export const generateDummyPlayers = (distribution) => {
     const players = []
     const rankProbs = getRankProbabilities(distribution)

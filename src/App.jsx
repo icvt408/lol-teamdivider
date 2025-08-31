@@ -29,6 +29,7 @@ function App() {
   }
 
 
+  //チャットからプレイヤーのIDを抽出するボタン
   const handlePlayersExtracted = (extractRiotIds) => {
     const newPlayers = extractRiotIds.map(name =>
       new Player({
@@ -78,6 +79,7 @@ function App() {
     handleCloseRankModal()
   };
 
+  // api叩いて情報補完するボタン
   const handleCompletePlayersInfo = async () => {
     setIsLoading(true);
     const updatePromises = players.map(async (player) => await player.completeInfo())
@@ -130,10 +132,9 @@ function App() {
               />
             ))
           )}
-
-          <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>
         </div>
 
+        <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>
         {import.meta.env.DEV && (
           <button onClick={() => setShowDebugModal(true)}>デバッグ</button>
         )}
