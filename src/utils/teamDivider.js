@@ -23,7 +23,7 @@ export const divideTeamsGreedy = (players) => {
         }
     });
 
-    return { teamA, teamB }
+    return { teamA, teamB };
 };
 
 /**
@@ -51,13 +51,13 @@ export const adjustTeams = (teamA, teamB, maxIterations = 100) => {
                 const tempTeamA = [...currentTeamA];
                 tempTeamA[j] = playerB;
                 const tempTeamB = [...currentTeamB];
-                tempTeamB[i] = playerA;
+                tempTeamB[k] = playerA;
 
                 const newScore = calculateImbalanceScore(tempTeamA, tempTeamB);
 
                 if (newScore < bestScore) {
                     bestScore = newScore;
-                    bestSwap = { indexA: j, indexB: k }
+                    bestSwap = { indexA: j, indexB: k };
                 }
             }
         }
@@ -71,7 +71,8 @@ export const adjustTeams = (teamA, teamB, maxIterations = 100) => {
 
         currentTeamA[bestSwap.indexA] = playerB;
         currentTeamB[bestSwap.indexB] = playerA;
-        currentScore = bestScore
+        currentScore = bestScore;
     }
-    return { teamA: currentTeamA, teamB: currentTeamB }
-}
+
+    return { teamA: currentTeamA, teamB: currentTeamB };
+};
