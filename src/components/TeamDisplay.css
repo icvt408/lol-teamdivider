@@ -1,0 +1,51 @@
+.team-box {
+    background-color: #333;
+    color: white;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.team-name {
+    text-align: center;
+    margin-top: 0;
+    border-bottom: 2px solid #61dafb;
+    padding-bottom: 0.5rem;
+}
+
+.team-player-list {
+    list-style: none;
+    padding: 0;
+}
+
+.team-player-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #444;
+}
+
+.team-player-item:last-child {
+    border-bottom: none;
+}
+
+.player-id {
+    font-weight: bold;
+}
+
+.rank-display {
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.rank-display .division {
+    width: 10px;
+    font-size: 0.6rem;
+    text-align: center;
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+}

@@ -5,6 +5,7 @@ import DebugModal from './components/DebugModal'
 import Header from './components/Header'
 import PlayerCard from "./components/PlayerCard"
 import RankModal from './components/RankModal'
+import TeamDisplay from './components/TeamDisplay'
 import Toast from './components/Toast'
 import Player from './player'
 import { Rank } from './types'
@@ -20,6 +21,7 @@ function App() {
   const [toastMessage, setToastMessage] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
   const [showDebugModal, setShowDebugModal] = useState(false);
+  const [teams, setTeams] = useState(null)
 
   const showToast = (message) => {
     setToastMessage(message);
@@ -119,8 +121,7 @@ function App() {
     console.log("Score: ", calculateImbalanceScore(teamA, teamB));
 
     const adjustedTeams = adjustTeams(teamA, teamB);
-    //ここにチームをディスプレイするための処理を追加
-    console.log(adjustedTeams);
+    setTeams(adjustedTeams)
 
     const finalScore = calculateImbalanceScore(adjustedTeams.teamA, adjustedTeams.teamB)
     console.log("finalScore: ", finalScore);
@@ -140,19 +141,39 @@ function App() {
       <div className="app-container">
         <Header />
         <main className="main-content">
+
           <ChatInputForm onPlayersExtracted={handlePlayersExtracted} />
-          <div className="player-card-list">
-            {players.length > 0 && (
-              players.map(player => (
-                <PlayerCard
-                  key={player.riotId}
-                  player={player}
-                  onLaneChange={handleLaneChange}
-                  onOpenRankModal={handleOpenRankModal}
-                />
-              ))
-            )}
+
+          <div className="team-layout-container">
+
+            <div className="player-card-list-container">
+              <div className="player-card-list">
+                {players.length > 0 && (
+                  players.map(player => (
+                    <PlayerCard
+                      key={player.riotId}
+                      player={player}
+                      onLaneChange={handleLaneChange}
+                      onOpenRankModal={handleOpenRankModal}
+                    />
+                  ))
+                )}
+              </div>
+            </div>
+
+            <div className="teams-display-container">
+              {teams && (
+                <div className="teams-display">
+
+                  <TeamDisplay teamName="チームA" players={teams.teamA} />
+                  <TeamDisplay teamName="チームB" players={teams.teamB} />
+
+                </div>
+              )}
+            </div>
+
           </div>
+
 
           <div className="button-group">
             <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>

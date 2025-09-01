@@ -47,8 +47,7 @@
     position: relative;
 }
 
-.division {
-    text-align: center;
+.rank-button .division {
     font-size: 0.7rem;
     position: absolute;
     bottom: 5px;
