@@ -17,6 +17,31 @@ import silverIcon from "./assets/rank_icons/Silver.svg"
 import unrankedIcon from "./assets/rank_icons/Unranked.svg"
 import { getLeagueByPuuid } from "./utils/riotApi"
 
+export const ranksWithDivisions = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamond"];
+export const ranksWithoutDivisions = ["Master", "GrandMaster", "Challenger"];
+export const divisions = ["IV", "III", "II", "I"];
+
+/**
+ * すべてのランクティアとディビジョンのリストを生成する
+ * @returns {Array<string>} 全ランクのリスト（例: ["IRON IV", "IRON III", ..., "CHALLENGER"]）
+ */
+export const generateAllRanks = () => {
+    let allRanks = [];
+
+    ranksWithDivisions.forEach(tier => {
+        divisions.forEach(division => {
+            allRanks.push({ tier: tier, rank: division });
+        });
+    });
+
+    ranksWithoutDivisions.forEach(tier => {
+        allRanks.push({ tier: tier, rank: "I" });
+    });
+
+    return allRanks;
+}
+
+
 export const laneIcons = {
     Top: topIcon,
     Jungle: jungleIcon,

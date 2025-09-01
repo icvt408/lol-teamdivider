@@ -1,30 +1,5 @@
 import Player from "../player";
-import { Rank } from "../types";
-
-const ranksWithDivisions = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamond"];
-const ranksWithoutDivisions = ["Master", "GrandMaster", "Challenger"];
-const divisions = ["IV", "III", "II", "I"];
-
-/**
- * すべてのランクティアとディビジョンのリストを生成する
- * @returns {Array<string>} 全ランクのリスト（例: ["IRON IV", "IRON III", ..., "CHALLENGER"]）
- */
-const generateAllRanks = () => {
-    let allRanks = [];
-
-    ranksWithDivisions.forEach(tier => {
-        divisions.forEach(division => {
-            allRanks.push({ tier: tier, rank: division });
-        });
-    });
-
-    ranksWithoutDivisions.forEach(tier => {
-        allRanks.push({ tier: tier, rank: "I" });
-    });
-
-    return allRanks;
-}
-
+import { Rank, generateAllRanks } from "../types";
 
 const allRanks = generateAllRanks();
 
