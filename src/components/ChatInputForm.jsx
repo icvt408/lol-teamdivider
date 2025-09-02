@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./ChatInputForm.css";
 
 const ChatInputForm = ({ onPlayersExtracted }) => {
 
@@ -34,17 +33,33 @@ const ChatInputForm = ({ onPlayersExtracted }) => {
 
 
     return (
-        <div class="wrap">
-            <div>
+        <div className={`flex flex-col px-4`}>
+            <div className={`flex`}>
                 <textarea
+                    id="text-area"
                     value={chatLog}
                     onChange={(e) => setChatLog(e.target.value)}
                     placeholder="カスタムのチャットログをここに貼り付けてください。"
-                    rows={5} />
+                    rows={5}
+                    className={`
+                        grow
+                        border border-gray-300
+                        resize-none
+                        rounded-lg p-3
+                        `}
+                />
             </div>
 
-            <div>
-                <button onClick={extractRiotIds}>プレイヤー名を取得</button>
+            <div className={`flex pt-4`}>
+                <button onClick={extractRiotIds}
+                    className={`
+                        grow
+                        px-4
+                        text-white
+                        rounded-full shadow-md hover:bg-[#1a4c90] 
+                        transition duration-200
+                        `}
+                >プレイヤー名を取得</button>
             </div>
 
         </div>

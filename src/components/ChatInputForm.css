@@ -1,9 +1,0 @@
-#wrap {
-    display: flex;
-}
-
-textarea {
-    resize: none;
-    width: 100vw;
-    box-sizing: border-box;
-}
