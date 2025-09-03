@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 const ChatInputForm = ({ onPlayersExtracted }) => {
 
@@ -42,8 +43,9 @@ const ChatInputForm = ({ onPlayersExtracted }) => {
                     placeholder="カスタムのチャットログをここに貼り付けてください。"
                     rows={5}
                     className={`
-                        grow
-                        border border-gray-300
+                        grow 
+                        text-xs
+                        border border-gray-600
                         resize-none
                         rounded-lg p-3
                         `}
@@ -51,15 +53,10 @@ const ChatInputForm = ({ onPlayersExtracted }) => {
             </div>
 
             <div className={`flex pt-4`}>
-                <button onClick={extractRiotIds}
-                    className={`
-                        grow
-                        px-4
-                        text-white
-                        rounded-full shadow-md hover:bg-[#1a4c90] 
-                        transition duration-200
-                        `}
-                >プレイヤー名を取得</button>
+                <Button
+                    content="プレイヤー名を取得"
+                    onClick={extractRiotIds}
+                />
             </div>
 
         </div>
