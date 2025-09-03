@@ -1,12 +1,8 @@
 import { laneIcons, tierIcons } from "../types";
-
-import "./PlayerCard.css";
+import Button from "./Button";
 
 const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
-    // playerオブジェクトの構造:
-    // { name: プレイヤー名, lanes: {main: メインレーン, sub: [サブレーン]}, rank: ランク }
     const lanes = ["Top", "Jungle", "Mid", "Adc", "Support"];
-    const divisionVisibleTiers = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamond"]
 
     const handleLaneButtonClick = (lane) => {
         const { main, sub } = player.lanes;
@@ -23,25 +19,28 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
     }
 
     return (
-        <div className="player-card">
-            <div className="player-info">
-                <span className="player-name">{player.gameName}</span>
-                <span className="player-tagline">#{player.tagLine}</span>
-                <button className={`rank-button ${player.rank.tier}`} onClick={() => onOpenRankModal(player.riotId)}>
-                    <img src={tierIcons[player.rank.tier]} alt={player.rank} />
-                    {divisionVisibleTiers.includes(player.rank.tier) && <span className="division">{player.rank.division}</span>}
-                </button>
+        <div className={`border border-gray-600 p-4 m-4 rounded-lg`}>
+            <div className="flex justify-between items-baseline px-2 pb-2">
+                <div>
+                    <span className="m-0 text-base font-bold">{player.gameName}</span>
+                    <span className="text-xs text-gray-400">#{player.tagLine}</span>
+                </div>
+                <div>
+                    <Button
+                        content={<img src={tierIcons[player.rank.tier]} alt={player.rank} />}
+                        onClick={() => onOpenRankModal(player.riotId)}
+                        color="bg-transparent" />
+                </div>
+
             </div>
-            <div className="lane-selection">
+            <div className="flex justify-between">
                 {lanes.map((lane) => (
-                    <button
-                        key={lane}
-                        className={`lane-button 
-                        ${player.lanes === lane ? 'main-selected' : ''}`}
+                    <Button
+                        content={<img src={laneIcons[lane]} alt={lane} className="size-[25px]" />}
                         onClick={() => handleLaneButtonClick(lane)}
-                    >
-                        <img src={laneIcons[lane]} alt={lane} />
-                    </button>
+                        color="bg-transparent"
+                        isActive={false}
+                    />
                 ))}
             </div>
         </div>
