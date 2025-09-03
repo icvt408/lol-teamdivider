@@ -1,16 +1,19 @@
-import "./Header.css";
-
+import githubLogo from "../assets/github-mark.svg"
+import Button from "./Button"
 const Header = () => {
     return (
-        <header className="app-header">
-            <div className="header-content">
+        <header className={`flex justify-between items-center w-full p-4`}>
+            <div className={`text-xl`}>
                 <h1>LOLカスタム用チーム分けツール(WIP)</h1>
             </div>
-            <div className="header-buttons">
-                <a href="https://github.com/icvt408/lol-teamdivider" target="_blank" rel="noopener noreferrer">
-                    <button className="header-button">github</button>
-                </a>
+            <div>
+                <Button
+                    content={<img src={githubLogo} alt="GitHub" className="size-[25px]" />}
+                    href="https://github.com/icvt408/lol-teamdivider"
+                    color="bg-transparent"
+                />
             </div>
+
         </header>
     )
 }
