@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
-import "./Toast.css";
 
 const Toast = ({ message, type = "error", onClose }) => {
+    const baseClasses = `
+    bg-bg
+    fixed right-[30px] text-center
+    rounded-lg 
+    animate-fadein
+    shadow-2xl border-l-3 
+    py-4 px-2
+        `
+
+
     const [isVisible, setIsVisible] = useState(true);
 
     useEffect(() => {
@@ -18,10 +27,12 @@ const Toast = ({ message, type = "error", onClose }) => {
     }
 
     return (
-        <div className={`toast toast-${type}`}>
-            <div className="toast-message">{message}</div>
-            <button className="toast-close-btn" onClick={onClose}>&times;</button>
-        </div>
+        <div className={`${baseClasses} border-${type}`}>
+            <div className="flex justify-between gap-4">
+                <div>{message}</div>
+                <button onClick={onClose}>&times;</button>
+            </div>
+        </div >
     );
 };
 
