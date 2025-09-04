@@ -134,6 +134,10 @@ function App() {
     setPlayers(newDummyPlayers);
   }
 
+  const handleViewToast = () => {
+    showToast("テストメッセージ")
+  }
+
   const playerInModal = players.find(p => p.riotId === modalPlayerName);
 
 
@@ -196,6 +200,7 @@ function App() {
             <DebugModal
               onClose={() => setShowDebugModal(false)}
               onReplacePlayers={handleReplaceDummyPlayers}
+              onViewToast={handleViewToast}
             />
           )}
 

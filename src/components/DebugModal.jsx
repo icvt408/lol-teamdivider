@@ -1,13 +1,14 @@
 import Button from "./Button";
 
-const DebugModal = ({ onClose, onReplacePlayers }) => {
+const DebugModal = ({ onClose, onReplacePlayers, onViewToast }) => {
     return (
-        <div style={modalOverlayStyle}>
-            <div style={modalContentStyle}>
+        <div style={modalOverlayStyle} onClick={onClose}>
+            <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
                 <h2>デバッグツール</h2>
                 <p>チーム分けのテスト用にダミーデータを追加できます。</p>
                 <div>
                     <Button content="ダミーデータを生成" onClick={() => onReplacePlayers()} />
+                    <Button content="トーストを表示" onClick={() => onViewToast()} />
                 </div>
                 <Button content="閉じる" onClick={onClose} style={closeButtonStyle} />
             </div>
