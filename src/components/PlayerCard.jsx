@@ -22,7 +22,7 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
         <div className={`shadow-md p-4 rounded-lg`}>
             <div className="flex justify-between items-baseline px-2 pb-2">
                 <div>
-                    <span className="m-0 text-base font-bold">{player.gameName}</span>
+                    <span className="font-bold">{player.gameName}</span>
                     <span className="text-xs text-gray-600">#{player.tagLine}</span>
                 </div>
                 <div>
@@ -36,6 +36,7 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
             <div className="flex justify-between">
                 {lanes.map((lane) => (
                     <Button
+                        key={lane}
                         content={<img src={laneIcons[lane]} alt={lane} className="size-[25px]" />}
                         onClick={() => handleLaneButtonClick(lane)}
                         color="bg-transparent"
