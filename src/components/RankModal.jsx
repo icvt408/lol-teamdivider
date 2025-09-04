@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { tierIcons } from '../types';
-import "./RankModal.css";
+import Button from './Button';
 const tiers = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamond", "Master", "GrandMaster", "Challenger"];
 const divisions = ["IV", "III", "II", "I"]
 
@@ -43,27 +43,27 @@ const RankModal = ({ player, onClose, onSave }) => {
                 <h2>{player.name}のランク設定</h2>
 
                 <div className='tier-select'>
-                    {tiers.map(tier => <button
+                    {tiers.map(tier => <Button
+                        content={<img src={tierIcons[tier]} alt="" />}
                         key={tier}
-                        className={`rank-button ${tier}
-                        ${selectedTier === tier ? 'selected' : ''}`}
-                        onClick={() => handleTierButtonClick(tier)} >
-                        <img src={tierIcons[tier]} alt="" />
-                    </button>)}
+                        isActive={selectedTier === tier}
+                        onClick={() => handleTierButtonClick(tier)}
+                    />
+                    )}
                 </div>
                 <div className='division-select'>
-                    {divisions.map(division => <button
+                    {divisions.map(division => <Button
+                        content={division}
                         key={division}
-                        className={`rank-button ${division} 
-                        ${selectedDivision === division ? 'selected' : ''}`
-                        }
+                        isActive={selectedDivision === division}
                         onClick={() => handleDivisionButtonClick(division)}
-                        disabled={isDivisionButtonDisabled}>{division}</button>)}
+                        disabled={isDivisionButtonDisabled}
+                    />)}
                 </div>
 
                 <div className='modal-buttons'>
-                    <button onClick={onClose}>キャンセル</button>
-                    <button onClick={handleSave} disabled={isSaveButtonDisabled}>確定</button>
+                    <Button content="キャンセル" onClick={onClose} />
+                    <Button content="確定" onClick={handleSave} disabled={isSaveButtonDisabled} />
                 </div>
             </div>
         </div >

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import Button from './components/Button'
 import ChatInputForm from './components/ChatInputForm'
 import DebugModal from './components/DebugModal'
 import Header from './components/Header'
@@ -176,10 +177,10 @@ function App() {
 
 
           <div className="button-group">
-            <button onClick={handleCompletePlayersInfo} disabled={isLoading}>APIで情報を補完</button>
-            <button onClick={handleDivideTeams}>チーム分け</button>
+            <Button content="APIで情報を補完" onClick={handleCompletePlayersInfo} disabled={isLoading} />
+            <Button content="チーム分け" onClick={handleDivideTeams} />
             {import.meta.env.DEV && (
-              <button onClick={() => setShowDebugModal(true)}>デバッグ</button>
+              <Button content="デバッグ" onClick={() => setShowDebugModal(true)} />
             )}
           </div>
 

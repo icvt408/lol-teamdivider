@@ -1,3 +1,4 @@
+import Button from "./Button";
 
 const DebugModal = ({ onClose, onReplacePlayers }) => {
     return (
@@ -6,9 +7,9 @@ const DebugModal = ({ onClose, onReplacePlayers }) => {
                 <h2>デバッグツール</h2>
                 <p>チーム分けのテスト用にダミーデータを追加できます。</p>
                 <div>
-                    <button onClick={() => onReplacePlayers()}>ダミー</button>
+                    <Button content="ダミーデータを生成" onClick={() => onReplacePlayers()} />
                 </div>
-                <button onClick={onClose} style={closeButtonStyle}>閉じる</button>
+                <Button content="閉じる" onClick={onClose} style={closeButtonStyle} />
             </div>
         </div>
     );
