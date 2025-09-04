@@ -8,7 +8,7 @@ const Button = ({ content, onClick, href, color = "bg-primary", textColor = "tex
 
     const baseClasses = `
     ${paddingClass} rounded-lg font-medium transition duration-200
-    hover:opacity-80 active:opacity-60 ${activeClass}
+    hover:bg-secondary active:bg-tertiary ${activeClass}
     `;
 
     const buttonContent = typeof content === "string" ? (
