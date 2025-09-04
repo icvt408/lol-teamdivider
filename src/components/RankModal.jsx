@@ -38,11 +38,11 @@ const RankModal = ({ player, onClose, onSave }) => {
     };
 
     return (
-        <div className='modal-overlay' onClick={onClose}>
-            <div className='modal-content' onClick={(e) => e.stopPropagation()}>
-                <h2>{player.name}のランク設定</h2>
+        <div className={`fixed z-1 size-full bg-black/40 flex top-0 left-0 items-center`} onClick={onClose}>
+            <div className={`m-auto bg-bg p-4 rounded-lg`} onClick={(e) => e.stopPropagation()}>
+                <h2>{player.riotId}のランク設定</h2>
 
-                <div className='tier-select'>
+                <div className="flex p-2 gap-2">
                     {tiers.map(tier => <Button
                         content={<img src={tierIcons[tier]} alt="" />}
                         key={tier}
@@ -51,7 +51,7 @@ const RankModal = ({ player, onClose, onSave }) => {
                     />
                     )}
                 </div>
-                <div className='division-select'>
+                <div className="flex p-2 gap-2">
                     {divisions.map(division => <Button
                         content={division}
                         key={division}
@@ -61,7 +61,7 @@ const RankModal = ({ player, onClose, onSave }) => {
                     />)}
                 </div>
 
-                <div className='modal-buttons'>
+                <div className="flex p-2 gap-2">
                     <Button content="キャンセル" onClick={onClose} />
                     <Button content="確定" onClick={handleSave} disabled={isSaveButtonDisabled} />
                 </div>
