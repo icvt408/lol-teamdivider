@@ -19,11 +19,11 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
     }
 
     return (
-        <div className={`border border-gray-600 p-4 m-4 rounded-lg`}>
+        <div className={`shadow-md p-4 rounded-lg`}>
             <div className="flex justify-between items-baseline px-2 pb-2">
                 <div>
                     <span className="m-0 text-base font-bold">{player.gameName}</span>
-                    <span className="text-xs text-gray-400">#{player.tagLine}</span>
+                    <span className="text-xs text-gray-600">#{player.tagLine}</span>
                 </div>
                 <div>
                     <Button

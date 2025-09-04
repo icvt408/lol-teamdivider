@@ -7,7 +7,7 @@ const Button = ({ content, onClick, href, color = "bg-primary", textColor = "tex
     const activeClass = isActive ? "opacity-100" : "opacity-40";
 
     const baseClasses = `
-    ${paddingClass} rounded-full font-medium transition duration-200
+    ${paddingClass} rounded-lg font-medium transition duration-200
     hover:opacity-80 active:opacity-60 ${activeClass}
     `;
 
