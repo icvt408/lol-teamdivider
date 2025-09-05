@@ -1,6 +1,8 @@
+import { toast } from "react-toastify";
 import Button from "./Button";
 
-const DebugModal = ({ onClose, onReplacePlayers, onViewToast }) => {
+const DebugModal = ({ onClose, onReplacePlayers }) => {
+    const notify = () => toast("テストメッセージ");
     return (
         <div style={modalOverlayStyle} onClick={onClose}>
             <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
@@ -8,7 +10,7 @@ const DebugModal = ({ onClose, onReplacePlayers, onViewToast }) => {
                 <p>チーム分けのテスト用にダミーデータを追加できます。</p>
                 <div>
                     <Button content="ダミーデータを生成" onClick={() => onReplacePlayers()} />
-                    <Button content="トーストを表示" onClick={() => onViewToast()} />
+                    <Button content="トーストを表示" onClick={notify} />
                 </div>
                 <Button content="閉じる" onClick={onClose} style={closeButtonStyle} />
             </div>

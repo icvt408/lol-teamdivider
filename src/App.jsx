@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
 import './App.css'
 import Button from './components/Button'
 import ChatInputForm from './components/ChatInputForm'
@@ -7,31 +8,19 @@ import Header from './components/Header'
 import PlayerCard from "./components/PlayerCard"
 import RankModal from './components/RankModal'
 import TeamDisplay from './components/TeamDisplay'
-import Toast from './components/Toast'
 import Player from './player'
 import { Rank } from './types'
 import { generateDummyPlayers } from './utils/dummyData'
 import calculateImbalanceScore from './utils/imbalanceScore'
 import { adjustTeams, divideTeamsGreedy } from './utils/teamDivider'
 
-
 function App() {
 
   const [players, setPlayers] = useState([])
   const [modalPlayerName, setModalPlayerName] = useState(null);
-  const [toastMessage, setToastMessage] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
   const [showDebugModal, setShowDebugModal] = useState(false);
   const [teams, setTeams] = useState(null)
-
-  const showToast = (message) => {
-    setToastMessage(message);
-  }
-
-  const hideToast = () => {
-    setToastMessage(null);
-  }
-
 
   //チャットからプレイヤーのIDを抽出するボタン
   const handlePlayersExtracted = (extractRiotIds) => {
@@ -105,7 +94,7 @@ function App() {
         userMessage = "サーバーエラーが発生しました。時間を置いて再度お試しください。"
       }
       console.error("An error occurred while completing player info:", error);
-      showToast(userMessage);
+      toast.error(userMessage);
     } finally {
       setIsLoading(false);
     }
@@ -114,7 +103,7 @@ function App() {
   //チーム分けボタン
   const handleDivideTeams = () => {
     if (!(players.length === 10)) {
-      showToast("チーム分けには10人のプレイヤーが必要です。")
+      toast.error("チーム分けには10人のプレイヤーが必要です。")
       return
     }
 
@@ -132,10 +121,6 @@ function App() {
   const handleReplaceDummyPlayers = () => {
     const newDummyPlayers = generateDummyPlayers("normal");
     setPlayers(newDummyPlayers);
-  }
-
-  const handleViewToast = () => {
-    showToast("テストメッセージ")
   }
 
   const playerInModal = players.find(p => p.riotId === modalPlayerName);
@@ -200,13 +185,13 @@ function App() {
             <DebugModal
               onClose={() => setShowDebugModal(false)}
               onReplacePlayers={handleReplaceDummyPlayers}
-              onViewToast={handleViewToast}
             />
           )}
 
-          {toastMessage && (
-            <Toast message={toastMessage} onClose={hideToast} />
-          )}
+          <ToastContainer
+            hideProgressBar={true}
+            theme="colored"
+          />
 
         </main >
       </div>

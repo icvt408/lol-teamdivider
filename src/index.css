@@ -9,34 +9,6 @@
   --color-error: #ce0000;
   --color-success: #259d63;
   --color-warning: #fb5b01;
-
-  --animate-fadein: fadein 0.25s forwards;
-  --animate-fadeout: fadeout 1s forwards;
-
-  @keyframes fadein {
-    from {
-      opacity: 0;
-      top: 0px;
-    }
-
-    to {
-      opacity: 1;
-      top: 10px;
-    }
-  }
-
-  @keyframes fadeout {
-    from {
-      opacity: 1;
-      top: 10px;
-    }
-
-
-    to {
-      opacity: 0;
-      top: 0px;
-    }
-  }
 }
 
 :root {
@@ -45,6 +17,10 @@
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
+
+  --toastify-color-success: var(--color-success);
+  --toastify-color-error: var(--color-error);
+  --toastify-color-warning: var(--color-warning);
 
   color-scheme: light dark;
   color: var(--color-text);
