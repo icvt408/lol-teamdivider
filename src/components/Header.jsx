@@ -2,7 +2,7 @@ import githubLogo from "../assets/github-mark.svg"
 import Button from "./Button"
 const Header = () => {
     return (
-        <header className={`flex justify-between items-center w-full p-4`}>
+        <header className={`flex justify-between items-center w-full`}>
             <div className={`text-xl`}>
                 <h1>LOLカスタム用チーム分けツール(WIP)</h1>
             </div>

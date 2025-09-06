@@ -34,7 +34,7 @@ const ChatInputForm = ({ onPlayersExtracted }) => {
 
 
     return (
-        <div className={`flex flex-col px-4`}>
+        <div className={`flex gap-2 flex-col`}>
             <div className={`flex`}>
                 <textarea
                     id="text-area"
@@ -47,17 +47,16 @@ const ChatInputForm = ({ onPlayersExtracted }) => {
                         text-xs
                         border border-gray-600
                         resize-none
-                        rounded-lg p-3
+                        rounded-lg p-4
                         `}
                 />
             </div>
-
-            <div className={`flex pt-4`}>
+            <div>
                 <Button
                     content="プレイヤー名を取得"
                     onClick={extractRiotIds}
-                />
-            </div>
+                /></div>
+
 
         </div>
 

@@ -1,4 +1,5 @@
 .app-container {
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -18,15 +19,17 @@
 }
 
 .player-card-list-container {
-    width: 300px;
     overflow-y: auto;
-    padding: 1rem;
+}
 
+.player-card-list{
+    display: flex;
+    flex-flow: column;
+    gap: 0.5rem;
 }
 
 .teams-display-container {
     flex: 1;
-    padding: 1rem;
     border-left: 1px solid #ccc;
 }
 
@@ -38,8 +41,4 @@
 
 .team-box {
     flex: 1;
-}
-
-.button-group {
-    padding: 1rem;
 }

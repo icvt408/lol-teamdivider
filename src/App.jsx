@@ -128,9 +128,9 @@ function App() {
 
   return (
     <>
-      <div className="app-container">
+      <div className="flex flex-col p-4 h-screen gap-4">
         <Header />
-        <main className="main-content">
+        <main className="flex flex-col grow min-h-0 gap-4">
 
           <ChatInputForm onPlayersExtracted={handlePlayersExtracted} />
 
@@ -172,29 +172,29 @@ function App() {
               <Button content="デバッグ" onClick={() => setShowDebugModal(true)} />
             )}
           </div>
-
-
-          {playerInModal && (
-            <RankModal
-              player={playerInModal}
-              onClose={handleCloseRankModal}
-              onSave={(handleSaveRank)} />
-          )}
-
-          {showDebugModal && (
-            <DebugModal
-              onClose={() => setShowDebugModal(false)}
-              onReplacePlayers={handleReplaceDummyPlayers}
-            />
-          )}
-
-          <ToastContainer
-            hideProgressBar={true}
-            theme="colored"
-          />
-
         </main >
       </div>
+
+      {playerInModal && (
+        <RankModal
+          player={playerInModal}
+          onClose={handleCloseRankModal}
+          onSave={(handleSaveRank)} />
+      )}
+
+      {showDebugModal && (
+        <DebugModal
+          onClose={() => setShowDebugModal(false)}
+          onReplacePlayers={handleReplaceDummyPlayers}
+        />
+      )}
+
+      <ToastContainer
+        hideProgressBar={true}
+        theme="colored"
+      />
+
+
     </>
   )
 }
