@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import './App.css'
 import Button from './components/Button'
 import ChatInputForm from './components/ChatInputForm'
 import DebugModal from './components/DebugModal'
@@ -134,10 +133,11 @@ function App() {
 
           <ChatInputForm onPlayersExtracted={handlePlayersExtracted} />
 
-          <div className="team-layout-container">
+          <div className="flex grow min-h-0">
 
-            <div className="player-card-list-container">
-              <div className="player-card-list">
+            <div className="w-[304px] overflow-y-scroll pr-4">
+
+              <div className="flex flex-col gap-2">
                 {players.length > 0 && (
                   players.map(player => (
                     <PlayerCard
@@ -149,15 +149,14 @@ function App() {
                   ))
                 )}
               </div>
+
             </div>
 
-            <div className="teams-display-container">
+            <div className="grow border-l border-gray-600">
               {teams && (
-                <div className="teams-display">
-
+                <div className="flex justify-around text-center">
                   <TeamDisplay teamName="チームA" players={teams.teamA} />
                   <TeamDisplay teamName="チームB" players={teams.teamB} />
-
                 </div>
               )}
             </div>
@@ -165,7 +164,7 @@ function App() {
           </div>
 
 
-          <div className="button-group">
+          <div className="flex gap-2">
             <Button content="APIで情報を補完" onClick={handleCompletePlayersInfo} disabled={isLoading} />
             <Button content="チーム分け" onClick={handleDivideTeams} />
             {import.meta.env.DEV && (
