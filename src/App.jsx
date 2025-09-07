@@ -17,7 +17,6 @@ function App() {
 
   const [players, setPlayers] = useState([])
   const [modalPlayerName, setModalPlayerName] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [showDebugModal, setShowDebugModal] = useState(false);
   const [teams, setTeams] = useState(null)
 
@@ -73,30 +72,11 @@ function App() {
 
   // api叩いて情報補完するボタン
   const handleCompletePlayersInfo = async () => {
-    setIsLoading(true);
     const updatePromises = players.map(async (player) => await player.completeInfo())
 
-    try {
-      const updatePlayers = await Promise.all(updatePromises);
-      setPlayers(updatePlayers)
-    } catch (error) {
-      const status = error.status;
-      let userMessage = "情報の取得中にエラーが発生しました。";
+    const updatePlayers = await Promise.all(updatePromises);
+    setPlayers(updatePlayers)
 
-      if (status === 404) {
-        userMessage = "データが見つかりませんでした。RiotIDを確認してください。";
-      } else if (status === 429) {
-        userMessage = "アクセス数が多すぎます。しばらくしてからもう一度お試しください";
-      } else if (status === 401) {
-        userMessage = "無効なAPIトークンです。管理者にお問い合わせください。";
-      } else {
-        userMessage = "サーバーエラーが発生しました。時間を置いて再度お試しください。"
-      }
-      console.error("An error occurred while completing player info:", error);
-      toast.error(userMessage);
-    } finally {
-      setIsLoading(false);
-    }
   }
 
   //チーム分けボタン
@@ -131,11 +111,11 @@ function App() {
         <Header />
         <main className="flex flex-col grow min-h-0 gap-4">
 
-          <ChatInputForm onPlayersExtracted={handlePlayersExtracted} />
+          <ChatInputForm onPlayersExtracted={handlePlayersExtracted} onCompletePlayersInfo={handleCompletePlayersInfo} />
 
           <div className="flex grow min-h-0">
 
-            <div className="w-[304px] overflow-y-scroll pr-4">
+            <div className="w-[304px] overflow-y-scroll">
 
               <div className="flex flex-col gap-2">
                 {players.length > 0 && (
@@ -165,13 +145,17 @@ function App() {
 
 
           <div className="flex gap-2">
-            <Button content="APIで情報を補完" onClick={handleCompletePlayersInfo} disabled={isLoading} />
             <Button content="チーム分け" onClick={handleDivideTeams} />
-            {import.meta.env.DEV && (
-              <Button content="デバッグ" onClick={() => setShowDebugModal(true)} />
-            )}
+
           </div>
-        </main >
+        </main>
+        {import.meta.env.DEV && (
+          <div className="absolute bottom-2 right-2 text-bg size-10" >
+            <Button content={<img src='../src/assets/debug.svg'></img>} onClick={() => setShowDebugModal(true)} />
+          </div>
+
+        )}
+
       </div>
 
       {playerInModal && (

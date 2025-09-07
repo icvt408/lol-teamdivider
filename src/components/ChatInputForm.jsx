@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import Button from "./Button";
 
-const ChatInputForm = ({ onPlayersExtracted }) => {
+const ChatInputForm = ({ onPlayersExtracted, onCompletePlayersInfo }) => {
 
     const [chatLog, setChatLog] = useState("");
 
@@ -29,9 +30,30 @@ const ChatInputForm = ({ onPlayersExtracted }) => {
 
         onPlayersExtracted(Array.from(finalPlayers).map(name => name.split(" #")));
 
+
     };
 
+    const complateInfo = async () => {
+        try {
+            await onCompletePlayersInfo()
+        } catch (error) {
+            const status = error.status;
+            let userMessage = "情報の取得中にエラーが発生しました。";
 
+            if (status === 404) {
+                userMessage = "データが見つかりませんでした。RiotIDを確認してください。";
+            } else if (status === 429) {
+                userMessage = "アクセス数が多すぎます。しばらくしてからもう一度お試しください";
+            } else if (status === 401) {
+                userMessage = "無効なAPIトークンです。管理者にお問い合わせください。";
+            } else {
+                userMessage = "サーバーエラーが発生しました。時間を置いて再度お試しください。"
+            }
+            console.error("An error occurred while completing player info:", error);
+            toast.error(userMessage);
+        }
+
+    };
 
     return (
         <div className={`flex gap-2 flex-col`}>
@@ -44,7 +66,7 @@ const ChatInputForm = ({ onPlayersExtracted }) => {
                     rows={5}
                     className={`
                         grow 
-                        text-xs
+                        text-xs text-gray-600
                         border border-gray-600
                         resize-none
                         rounded-lg p-4
@@ -55,7 +77,9 @@ const ChatInputForm = ({ onPlayersExtracted }) => {
                 <Button
                     content="プレイヤー名を取得"
                     onClick={extractRiotIds}
-                /></div>
+                />
+                <Button content="ランク取得" onClick={complateInfo} />
+            </div>
 
 
         </div>
