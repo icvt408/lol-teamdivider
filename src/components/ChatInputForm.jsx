@@ -5,6 +5,7 @@ import Button from "./Button";
 const ChatInputForm = ({ onPlayersExtracted, onCompletePlayersInfo }) => {
 
     const [chatLog, setChatLog] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const extractRiotIds = () => {
 
@@ -34,6 +35,7 @@ const ChatInputForm = ({ onPlayersExtracted, onCompletePlayersInfo }) => {
     };
 
     const complateInfo = async () => {
+        setIsLoading(true);
         try {
             await onCompletePlayersInfo()
         } catch (error) {
@@ -51,6 +53,8 @@ const ChatInputForm = ({ onPlayersExtracted, onCompletePlayersInfo }) => {
             }
             console.error("An error occurred while completing player info:", error);
             toast.error(userMessage);
+        } finally {
+            setIsLoading(false);
         }
 
     };
@@ -73,12 +77,14 @@ const ChatInputForm = ({ onPlayersExtracted, onCompletePlayersInfo }) => {
                         `}
                 />
             </div>
-            <div>
-                <Button
-                    content="プレイヤー名を取得"
-                    onClick={extractRiotIds}
-                />
-                <Button content="ランク取得" onClick={complateInfo} />
+            <div className="flex gap-2">
+                <Button content="プレイヤー名を取得" onClick={extractRiotIds} />
+                <Button content={isLoading ?
+                    <div className="flex justify-center items-center gap-2 px-2" aria-label="読み込み中">
+                        <span className="animate-spin size-4 border-4 border-bg rounded-full border-t-transparent"></span>
+                        取得中...
+                    </div> : "サモナー情報を取得"
+                } onClick={complateInfo} disabled={isLoading} />
             </div>
 
 
