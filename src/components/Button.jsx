@@ -2,13 +2,13 @@
 const Button = ({ content, onClick, href, color = "bg-primary", textColor = "text-white", isActive = true, disabled = false }) => {
     const isLink = !!href;
 
-    const paddingClass = typeof content === 'string' ? 'py-3 px-6' : 'p-2';
+    const paddingClass = typeof content === 'string' ? 'py-3 px-4' : 'p-2';
 
     const activeClass = isActive ? "opacity-100" : "opacity-40";
 
     const baseClasses = `
     ${paddingClass} rounded-lg font-medium transition duration-200
-    hover:bg-secondary active:bg-tertiary ${activeClass}
+    hover:bg-secondary active:bg-tertiary disabled:opacity-60 ${activeClass}
     `;
 
     const buttonContent = typeof content === "string" ? (
