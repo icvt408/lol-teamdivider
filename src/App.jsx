@@ -6,7 +6,7 @@ import DebugModal from './components/DebugModal'
 import Header from './components/Header'
 import PlayerCard from "./components/PlayerCard"
 import RankModal from './components/RankModal'
-import TeamDisplay from './components/TeamDisplay'
+import TeamDivideResult from './components/TeamDivideResult'
 import Player from './player'
 import { Rank } from './types'
 import { generateDummyPlayers } from './utils/dummyData'
@@ -129,16 +129,10 @@ function App() {
                   ))
                 )}
               </div>
-
             </div>
 
             <div className="grow border-l border-gray-600">
-              {teams && (
-                <div className="flex justify-around text-center">
-                  <TeamDisplay teamName="チームA" players={teams.teamA} />
-                  <TeamDisplay teamName="チームB" players={teams.teamB} />
-                </div>
-              )}
+              {teams && <TeamDivideResult teams={teams} />}
             </div>
 
           </div>

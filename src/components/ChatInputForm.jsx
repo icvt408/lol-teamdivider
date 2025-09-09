@@ -79,12 +79,13 @@ const ChatInputForm = ({ onPlayersExtracted, onCompletePlayersInfo }) => {
             </div>
             <div className="flex gap-2">
                 <Button content="プレイヤー名を取得" onClick={extractRiotIds} />
-                <Button content={isLoading ?
-                    <div className="flex justify-center items-center gap-2 px-2" aria-label="読み込み中">
-                        <span className="animate-spin size-4 border-4 border-bg rounded-full border-t-transparent"></span>
-                        取得中...
-                    </div> : "サモナー情報を取得"
-                } onClick={complateInfo} disabled={isLoading} />
+                <Button className="w-[176px]"
+                    content={isLoading ?
+                        <div className="flex justify-center items-center gap-2 px-2" aria-label="読み込み中">
+                            <span className="animate-spin size-4 border-4 border-bg rounded-full border-t-transparent"></span>
+                            取得中...
+                        </div> : "サモナー情報を取得"
+                    } onClick={complateInfo} disabled={isLoading} />
             </div>
 
 
