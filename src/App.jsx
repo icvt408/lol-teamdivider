@@ -131,8 +131,8 @@ function App() {
               </div>
             </div>
 
-            <div className="grow border-l border-gray-600">
-              {teams && <TeamDivideResult teams={teams} />}
+            <div className="grow border-l border-gray-600 flex ">
+              <TeamDivideResult teams={teams} />
             </div>
           </div>
 
