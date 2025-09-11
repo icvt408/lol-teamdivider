@@ -116,9 +116,7 @@ function App() {
           <ChatInputForm onPlayersExtracted={handlePlayersExtracted} onCompletePlayersInfo={handleCompletePlayersInfo} />
 
           <div className="flex grow min-h-0">
-
             <div className="w-[304px] overflow-y-scroll">
-
               <div className="flex flex-col gap-2">
                 {players.length > 0 && (
                   players.map(player => (
@@ -136,7 +134,6 @@ function App() {
             <div className="grow border-l border-gray-600">
               {teams && <TeamDivideResult teams={teams} />}
             </div>
-
           </div>
 
 
