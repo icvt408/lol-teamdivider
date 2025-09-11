@@ -23,7 +23,7 @@ export const divideTeamsGreedy = (players) => {
         }
     });
 
-    return { teamA, teamB };
+    return [teamA, teamB];
 };
 
 /**
@@ -74,5 +74,5 @@ export const adjustTeams = (teamA, teamB, maxIterations = 100) => {
         currentScore = bestScore;
     }
 
-    return { teamA: currentTeamA, teamB: currentTeamB };
+    return [currentTeamA, currentTeamB];
 };

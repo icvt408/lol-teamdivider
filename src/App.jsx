@@ -18,7 +18,9 @@ function App() {
   const [players, setPlayers] = useState([])
   const [modalPlayerName, setModalPlayerName] = useState(null);
   const [showDebugModal, setShowDebugModal] = useState(false);
-  const [teams, setTeams] = useState(null)
+  const [teams, setTeams] = useState([])
+
+  const lanes = ["Top", "Jungle", "Mid", "Adc", "Support"];
 
   //チャットからプレイヤーのIDを抽出するボタン
   const handlePlayersExtracted = (extractRiotIds) => {
@@ -86,13 +88,13 @@ function App() {
       return
     }
 
-    const { teamA, teamB } = divideTeamsGreedy(players);
-    console.log("Score: ", calculateImbalanceScore(teamA, teamB));
+    const teams = divideTeamsGreedy(players);
+    console.log("Score: ", calculateImbalanceScore(teams[0], teams[1]));
 
-    const adjustedTeams = adjustTeams(teamA, teamB);
+    const adjustedTeams = adjustTeams(teams[0], teams[1]);
     setTeams(adjustedTeams)
 
-    const finalScore = calculateImbalanceScore(adjustedTeams.teamA, adjustedTeams.teamB)
+    const finalScore = calculateImbalanceScore(adjustedTeams[0], adjustedTeams[1])
     console.log("finalScore: ", finalScore);
   }
 
