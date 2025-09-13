@@ -21,7 +21,7 @@ const TeamDisplay = ({ teamName, players }) => {
                             <div
                                 style={{ backgroundImage: `url(/src/assets/rank_icons/${player.rank.tier}.svg)` }}
                                 className="size-[35px] bg-center bg-no-repeat rounded-lg">
-                                {ranksWithDivisions.includes(player.rank.tier) && <span className="align-bottom pl-4 text-xs text-gray-600">{player.rank.division}</span>}
+                                {ranksWithDivisions.includes(player.rank.tier) && <span className="text-xs text-gray-600 flex justify-end items-end size-full p-1">{player.rank.division}</span>}
                             </div>
                         </div>
                     </div>
