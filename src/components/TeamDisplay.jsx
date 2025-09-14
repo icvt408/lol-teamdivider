@@ -5,15 +5,16 @@ import { ranksWithDivisions } from "../types";
  * @param {string} props.teamName - チーム名（例: "チームA"）
  * @param {Array<Object>} props.players - チームのプレイヤーリスト
  */
-const TeamDisplay = ({ teamName, players }) => {
+const TeamDisplay = ({ players }) => {
 
     const lanes = ["Top", "Jungle", "Mid", "Adc", "Support"];
+
     return (
         <div>
             <div className="flex flex-col gap-2 p-4" >
                 {players.map(player =>
-                    <div className="shadow-md p-4 rounded-lg border border-gray-600 w-2xs">
-                        <div key={player.riotId} className="flex justify-between items-center px2">
+                    <div key={player.riotId} className="shadow-md p-4 rounded-lg border border-gray-600 w-2xs">
+                        <div className="flex justify-between items-center px2">
                             <div>
                                 <span className="font-bold">{player.gameName}</span>
                                 <span className="text-xs text-gray-600">#{player.tagLine}</span>
