@@ -4,7 +4,13 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
     const lanes = ["Top", "Jungle", "Mid", "Adc", "Support"];
 
     const handleLaneButtonClick = (lane) => {
-        console.log(`${player.riotId}: ${lane}`);
+        let newLanes = new Set(player.lanes);
+
+        if (newLanes.has(lane)) {
+            newLanes.delete(lane)
+        }
+
+        onLaneChange(Array.from(newLanes))
     }
 
     return (
@@ -26,7 +32,7 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
             <div className="flex justify-between">
                 {lanes.map((lane) => (
                     <button className="p-2" key={lane} onClick={() => handleLaneButtonClick(lane)}>
-                        <img src={laneIcons[lane]} alt={lane} className="size-[25px] opacity-40 hover:opacity-90 transition duration-200" />
+                        <img src={laneIcons[lane]} alt={lane} className={`size-[25px] ${player.lanes.includes(lane) ? "opacity-100" : "opacity-40"} hover:opacity-90 transition duration-200"`} />
                     </button>
                 ))}
             </div>

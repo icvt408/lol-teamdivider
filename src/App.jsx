@@ -36,11 +36,20 @@ function App() {
   //レーン設定ボタン
   const handleLaneChange = (playerName, newLanes) => {
     setPlayers(
-      players.map(player =>
-        player.name === playerName ? { ...player, lanes: newLanes } : player
-      )
-    )
-  }
+      players.map(player => {
+        if (player.riotId === playerName) {
+          return new Player({
+            gameName: player.gameName,
+            tagLine: player.tagLine,
+            lane: newLanes,
+            rank: player.rank,
+            puuid: player.puuid
+          });
+        }
+        return player
+      })
+    );
+  };
 
   //ランク設定モーダル
   const handleOpenRankModal = (playerName) => {

@@ -5,7 +5,7 @@ import { getAccountByRiotId } from "./utils/riotApi";
  * プレイヤーデータを格納するクラス
  */
 class Player {
-    constructor({ gameName, tagLine, lanes = null, rank = new Rank("Unranked", "I"), puuid = null, isApiFetched = false }) {
+    constructor({ gameName, tagLine, lanes = [], rank = new Rank("Unranked", "I"), puuid = null, isApiFetched = false }) {
         if (!gameName || !tagLine) {
             throw new Error('Player must have a gameName and tagLine.');
         }
