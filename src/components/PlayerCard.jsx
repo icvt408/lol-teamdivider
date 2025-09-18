@@ -8,9 +8,11 @@ const PlayerCard = ({ player, onLaneChange, onOpenRankModal }) => {
 
         if (newLanes.has(lane)) {
             newLanes.delete(lane)
+        } else {
+            newLanes.add(lane);
         }
 
-        onLaneChange(Array.from(newLanes))
+        onLaneChange(player.riotId, Array.from(newLanes))
     }
 
     return (

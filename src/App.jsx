@@ -20,8 +20,6 @@ function App() {
   const [showDebugModal, setShowDebugModal] = useState(false);
   const [teams, setTeams] = useState([])
 
-  const lanes = ["Top", "Jungle", "Mid", "Adc", "Support"];
-
   //チャットからプレイヤーのIDを抽出するボタン
   const handlePlayersExtracted = (extractRiotIds) => {
     const newPlayers = extractRiotIds.map(name =>
@@ -41,12 +39,12 @@ function App() {
           return new Player({
             gameName: player.gameName,
             tagLine: player.tagLine,
-            lane: newLanes,
+            lanes: newLanes,
             rank: player.rank,
             puuid: player.puuid
           });
         }
-        return player
+        return player;
       })
     );
   };
