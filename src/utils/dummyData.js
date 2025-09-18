@@ -1,5 +1,5 @@
 import Player from "../player";
-import { Rank, generateAllRanks } from "../types";
+import { Rank, allLanes, generateAllRanks } from "../types";
 
 const allRanks = generateAllRanks();
 
@@ -83,8 +83,15 @@ export const generateDummyPlayers = (distribution) => {
         const gameName = `Player_${i}`;
         const selectedRank = getRandomRankByDistribution(rankProbs);
 
-        players.push(new Player({ gameName: gameName, tagLine: "dummy", rank: selectedRank }));
+        const lanes = [];
+        lanes.push(allLanes[Math.floor(Math.random() * allLanes.length)]);
+        const otherLane = [...allLanes].filter(lane => !lanes.includes(lane))
+        lanes.push(otherLane[Math.floor(Math.random() * allLanes.length)])
+
+        players.push(new Player({ gameName: gameName, tagLine: "dummy", lanes: lanes, rank: selectedRank }));
     };
+
+    console.log(players);
 
     return players;
 }

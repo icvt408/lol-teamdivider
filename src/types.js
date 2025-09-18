@@ -20,6 +20,7 @@ import { getLeagueByPuuid } from "./utils/riotApi"
 export const ranksWithDivisions = ["Iron", "Bronze", "Silver", "Gold", "Platinum", "Emerald", "Diamond"];
 export const ranksWithoutDivisions = ["Master", "GrandMaster", "Challenger"];
 export const divisions = ["IV", "III", "II", "I"];
+export const allLanes = ["Top", "Jungle", "Mid", "Adc", "Support"];
 
 /**
  * すべてのランクティアとディビジョンのリストを生成する
